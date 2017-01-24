@@ -1,0 +1,85 @@
+
+<html>
+
+<!-- Forked from https://github.com/mylen/leaflet.TileLayer.WMTS -->
+
+<head>
+    <title>Nautical maps example  / Finnish Transport Agency</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="leaflet-tilelayer-wmts.js"></script>
+</head>
+
+<body>
+    <div id="map" style="height: 100%; width: 100%"></div>
+    <script>
+        var layers = [
+            'liikennevirasto:Yleiskartat public',
+            'liikennevirasto:Merikarttasarjat public',
+            'liikennevirasto:Merikarttasarjojen erikoiskartat public',
+	    'liikennevirasto:Merikarttasarja A public',
+            'liikennevirasto:Merikarttasarja A erikoiskartat public',
+            'liikennevirasto:Merikarttasarja B',
+            'liikennevirasto:Merikarttasarja B erikoiskartat',
+            'liikennevirasto:Merikarttasarja C public',
+            'liikennevirasto:Merikarttasarja C erikoiskartat',
+            'liikennevirasto:Merikarttasarja D',
+            'liikennevirasto:Merikarttasarja D erikoiskartat',
+            'liikennevirasto:Merikarttasarja E',
+            'liikennevirasto:Merikarttasarja E erikoiskartat',
+            'liikennevirasto:Merikarttasarja F public',
+            'liikennevirasto:Merikarttasarja F erikoiskartat',
+            'liikennevirasto:Merikarttasarja G public',
+            'liikennevirasto:Merikarttasarja G erikoiskartat public',
+            'liikennevirasto:Merikarttasarja J',
+            'liikennevirasto:Merikarttasarja J erikoiskartat',
+            'liikennevirasto:Merikarttasarja K',
+            'liikennevirasto:Merikarttasarja K erikoiskartat',
+            'liikennevirasto:Merikarttasarja L',
+            'liikennevirasto:Merikarttasarja L erikoiskartat',
+            'liikennevirasto:Merikarttasarja M',
+            'liikennevirasto:Merikarttasarja M erikoiskartat',
+            'liikennevirasto:Merikarttasarja N',
+            'liikennevirasto:Merikarttasarja N erikoiskartat',
+            'liikennevirasto:Merikarttasarja O',
+            'liikennevirasto:Merikarttasarja O erikoiskartat',
+            'liikennevirasto:Merikarttasarja P',
+            'liikennevirasto:Merikarttasarja P erikoiskartat',
+            'liikennevirasto:Merikarttasarja R',
+            'liikennevirasto:Merikarttasarja R erikoiskartat',
+            'liikennevirasto:Merikarttasarja T',
+            'liikennevirasto:Merikarttasarja T erikoiskartat',
+            'liikennevirasto:Merikarttasarja V',
+            'liikennevirasto:Merikarttasarja V erikoiskartat'
+        ];
+
+        var url = "https://julkinen.liikennevirasto.fi/rasteripalvelu/service/wmts?a=1";
+        var map = L.map('map', {crs: L.CRS.EPSG3857}).setView([60, 24], 7);
+
+        L.control.scale({
+            'position': 'bottomleft',
+            'metric': true,
+            'imperial': false
+        }).addTo(map);
+        var baseLayers = {};
+        layers.forEach(function(item) {
+            var ign = new L.TileLayer.WMTS(url, {
+                layer: item,
+                style: "normal",
+                tilematrixSet: "WGS84_Pseudo-Mercator",
+                format: "image/png",
+                attribution: "CC BY 4.0, Lähde: Liikennevirasto. Ei navigointikäytöön. Ei täytä virallisen merikartan vaatimuksia."
+            });
+            baseLayers[item] = ign;
+
+        });
+
+        L.control.layers(baseLayers, null, {collapsed:false}).addTo(map);
+
+	
+    </script>
+</body>
+
+</html>
